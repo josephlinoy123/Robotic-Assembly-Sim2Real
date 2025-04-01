@@ -8,7 +8,20 @@ This repository contains the source code and related materials for my master's t
 **"Leveraging Generative AI and Reinforcement Learning to Improve Robot-based Assembly Task Simulations"**  
 *Deggendorf Institute of Technology, 2025*
 
-![Image](https://github.com/user-attachments/assets/9a507da4-00f4-4f01-872d-f93cb6ee46fc)
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/cfcf4245-303d-4c5b-9666-dc0781a053c9" alt="Methodology Stage 1" width="400"/>
+      <br />
+      <strong>Stage 1: VAE-LSTM Training</strong>
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/e103bd6e-1f88-4bdf-b28a-e250443de486" alt="Methodology Stage 2" width="400"/>
+      <br />
+      <strong>Stage 2: RL Training</strong>
+    </td>
+  </tr>
+</table>
 
 ## 📝 Abstract
 This repository contains the complete implementation of a novel two-stage approach combining:

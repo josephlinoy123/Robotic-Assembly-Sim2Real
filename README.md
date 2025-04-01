@@ -8,7 +8,7 @@ This repository contains the source code and related materials for my master's t
 **"Leveraging Generative AI and Reinforcement Learning to Improve Robot-based Assembly Task Simulations"**  
 *Deggendorf Institute of Technology, 2025*
 
-![Image](https://github.com/user-attachments/assets/7888a80d-2300-4f2a-a488-0d183be55fa5)
+![Image](https://github.com/user-attachments/assets/9a507da4-00f4-4f01-872d-f93cb6ee46fc)
 
 ## 📝 Abstract
 This repository contains the complete implementation of a novel two-stage approach combining:

@@ -4,11 +4,11 @@
 [![Python 3.8+](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-1.12%2B-red.svg)](https://pytorch.org/)
 
-Official implementation for the Master's Thesis:  
+This repository contains the source code and related materials for my master's thesis:  
 **"Leveraging Generative AI and Reinforcement Learning to Improve Robot-based Assembly Task Simulations"**  
 *Deggendorf Institute of Technology, 2025*
 
-<img src="docs/figures/methodology_flowchart.png" alt="Methodology" width="800"/>
+![Image](https://github.com/user-attachments/assets/7888a80d-2300-4f2a-a488-0d183be55fa5)
 
 ## 📝 Abstract
 This repository contains the complete implementation of a novel two-stage approach combining:
@@ -34,7 +34,7 @@ pip install -r requirements.txt
 ```
 
 ### Dataset Preparation
-1. Download the [CSIRO Manipulation Benchmark Dataset](https://example.com/dataset)
+1. Download the [CSIRO Manipulation Benchmark Dataset]([https://example.com/dataset](https://research.csiro.au/robotics/manipulation-benchmark/))
 2. Place raw data in `data/raw/`
 
 ## 🧠 Model Architecture

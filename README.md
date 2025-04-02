@@ -35,61 +35,77 @@ pip install -r requirements.txt
 1. Download [CSIRO Manipulation Benchmark Dataset](https://research.csiro.au/robotics/manipulation-benchmark/)
 2. Place raw data in `data/real/` & `data/simulated/`
 
-## 🧠 Model Architecture
+## 🧠 Architecture Overview
 ### Two-Stage Methodology
 ```mermaid
 graph TD
-    A[Data Acquisition] --> B[Preprocessing]
-    B --> C[Train VAE-LSTM]
-    C --> D[Generate Synthetic Data]
-    D --> E[RL Training]
-    E --> F[Initialize RobotEnv]
-    F --> G[Train PPO Agent]
-    G --> H{Episode Done?}
-    H -->|No| G
-    H -->|Yes| I[Save Trained Model]
+    A[Real-World Data] --> B[VAE Training]
+    B --> C[Synthetic Data Generation]
+    C --> D[RL Policy Training]
+    D --> E[Sim2Real Deployment]
 ```    
 ## 💻 Usage
 ### 1. Generate Synthetic Data
 ```bash
-# Train ForceVAE model
-python src/vae_lstm/train.py --config configs/force_vae.yaml
+# Train ForceVAE Model
+python src/vae_lstm/train.py \
+  --config configs/force_vae.yaml \
+  --model-type force
 
-# Generate synthetic trajectories
-python src/vae_lstm/generate_data.py --task 01 --output data/generated/
+# Train TorqueVAE Model  
+python src/vae_lstm/train.py \
+  --config configs/torque_vae.yaml \
+  --model-type torque
+
+# Generate Synthetic Trajectories (All Tasks)
+python src/vae_lstm/generate.py \
+  --output output_split_models/generated/
 ```
 
 ### 2. Train RL Agent
 ```bash
 python src/rl_training/train_ppo.py \
-  --env RobotEnv-v1 \
-  --total_timesteps 1000000 \
-  --log_dir logs/
+  --data output_split_models/generated/ \
+  --output output_split_models/rl_models/ \
+  --timesteps 1000000 \
+  --lr 0.0003
+```
+
+### 3. Evaluate RL Agent
+```bash
+python src/rl_training/evaluate.py \
+  --model output_split_models/rl_models/ppo_robot \
+  --data output_split_models/generated/ \
+  --output output_split_models/metrics/ \
+  --episodes 10
 ```
 
 ## 📂 Folder Structure
 ```
-robot/                   # Project root
-├── data/                # RAW data
-│   ├── real/            # As-is
-│   └── simulated/       # As-is
-├── output_split_models/ # Generates outputs
-│   ├── force/           # Saves .pth files
-│   ├── torque/          # Saves .pth files
-│   ├── generated/       # Saves .npy files
-│   ├── metrics/         # Saves CSVs
-│   ├── plots/           # Saves PNGs
-│   └── rl_models/       # Saves PPO.zip
-├── src/                 # NEW: All executable code
-│   ├── vae_lstm/        # VAE components
-│   │   ├── train.py     
-│   │   ├── generate.py
-│   │   └── models.py
-│   └── rl_training/     # RL components
-│       ├── train_ppo.py
-│       └── environments.py
-│       └── evaluate.py
-│       └── init.py
+Robotic-Assembly-Sim2Real/
+├── data/                   # Raw datasets
+│   ├── real/               # Real-world measurements
+│   └── simulated/          # Physics-based simulations
+├── output_split_models/    # Generated outputs
+│   ├── force/              # ForceVAE checkpoints
+│   ├── torque/             # TorqueVAE checkpoints
+│   ├── generated/          # Synthetic trajectories (.npy)
+│   ├── metrics/            # Evaluation metrics
+│   ├── plots/              # Comparison visualizations
+│   └── rl_models/          # Trained PPO policies
+├── src/                    # Source code
+│   ├── vae_lstm/           # Generative models
+│   │   ├── train.py        # Training script
+│   │   ├── generate.py     # Data generation
+│   │   └── models.py       # VAE architectures
+│   └── rl_training/        # RL components
+│       ├── train_ppo.py    # PPO training
+│       ├── evaluate.py     # Policy evaluation
+│       ├── environments.py # RobotEnv implementation
+│       └── __init__.py     # Package definition
+├── configs/                # Training configurations
+├── requirements.txt        # Python dependencies
+└── LICENSE
 ```
 
 ## 📚 Citation
@@ -100,6 +116,7 @@ If you use this work in your research, please cite:
   title   = {Leveraging Generative AI and Reinforcement Learning to Improve Robot-based Assembly Task Simulations},
   school  = {Deggendorf Institute of Technology},
   year    = {2025},
+  type    = {Master's thesis},
   url     = {https://github.com/josephlinoy123/Robotic-Assembly-Sim2Real}
 }
 ```

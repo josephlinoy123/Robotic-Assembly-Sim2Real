@@ -33,9 +33,20 @@ pip install -r requirements.txt
 
 ### Dataset Preparation
 1. Download [CSIRO Manipulation Benchmark Dataset](https://research.csiro.au/robotics/manipulation-benchmark/)
-2. Place raw data in `data/real/` & `data/simulated/`
+2. Place raw data with structure:
+```bash
+data/
+├── real/
+│   ├── Task01_real.csv
+│   ├── Task02_real.csv
+│   └── ...
+└── simulated/
+    ├── Task01_sim.csv
+    ├── Task02_sim.csv
+    └── ...
+```
 
-## 🧠 Architecture Overview
+## 🧠 Model Architecture
 ### Two-Stage Methodology
 ```mermaid
 graph TD

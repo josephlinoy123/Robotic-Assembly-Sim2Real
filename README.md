@@ -67,28 +67,27 @@ python src/rl_training/train_ppo.py \
   --log_dir logs/
 ```
 
-## 📂 Repository Structure
+## 📂 Folder Structure
 ```
 robot/                   # Project root
 ├── data/                # RAW data
 │   ├── real/            # As-is
 │   └── simulated/       # As-is
-├── output_split_models/ # Generated outputs (current structure preserved)
-│   ├── force/           # Existing .pth files
-│   ├── torque/          # Existing .pth files
-│   ├── generated/       # Existing .npy files
-│   ├── metrics/         # Existing CSVs
-│   ├── plots/           # Existing PNGs
-│   └── rl_models/       # Existing PPO.zip
+├── output_split_models/ # Generates outputs
+│   ├── force/           # Saves .pth files
+│   ├── torque/          # Saves .pth files
+│   ├── generated/       # Saves .npy files
+│   ├── metrics/         # Saves CSVs
+│   ├── plots/           # Saves PNGs
+│   └── rl_models/       # Saves PPO.zip
 ├── src/                 # NEW: All executable code
 │   ├── vae_lstm/        # VAE components
-│   │   ├── train.py     # Modified to use output_split_models
+│   │   ├── train.py     
 │   │   ├── generate.py
 │   │   └── models.py
 │   └── rl_training/     # RL components
 │       ├── train_ppo.py
 │       └── environments.py
-└── sim2real_vae.py      # LEGACY (eventually migrate to src)
 ```
 
 ## 📚 Citation

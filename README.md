@@ -32,19 +32,23 @@ pip install -r requirements.txt
 ```
 
 ### Dataset Preparation
-1. Download the [CSIRO Manipulation Benchmark Dataset]([https://example.com/dataset](https://research.csiro.au/robotics/manipulation-benchmark/))
-2. Place raw data in `data/raw/`
+1. Download [CSIRO Manipulation Benchmark Dataset](https://research.csiro.au/robotics/manipulation-benchmark/)
+2. Place raw data in `data/real/` & `data/simulated/`
 
 ## 🧠 Model Architecture
 ### Two-Stage Methodology
 ```mermaid
-graph LR
-A[Real+Simulated Data] --> B[VAE-LSTM]
-B --> C[Synthetic FT Data]
-C --> D[PPO Agent]
-D --> E[Robotic Controller]
-```
-
+graph TD
+    A[Data Acquisition] --> B[Preprocessing]
+    B --> C[Train VAE-LSTM]
+    C --> D[Generate Synthetic Data]
+    D --> E[RL Training]
+    E --> F[Initialize RobotEnv]
+    F --> G[Train PPO Agent]
+    G --> H{Episode Done?}
+    H -->|No| G
+    H -->|Yes| I[Save Trained Model]
+```    
 ## 💻 Usage
 ### 1. Generate Synthetic Data
 ```bash
@@ -65,17 +69,26 @@ python src/rl_training/train_ppo.py \
 
 ## 📂 Repository Structure
 ```
-.
-├── data/                   # Dataset directories
-├── docs/                   # Thesis documentation
-├── models/                 # Pretrained models
-├── src/                    # Source code
-│   ├── data_processing/    # Data pipelines
-│   ├── vae_lstm/           # Generative models
-│   └── rl_training/        # RL implementations
-├── experiments/            # Jupyter notebooks
-├── requirements.txt        # Python dependencies
-└── LICENSE
+robot/                   # Project root
+├── data/                # RAW data
+│   ├── real/            # As-is
+│   └── simulated/       # As-is
+├── output_split_models/ # Generated outputs (current structure preserved)
+│   ├── force/           # Existing .pth files
+│   ├── torque/          # Existing .pth files
+│   ├── generated/       # Existing .npy files
+│   ├── metrics/         # Existing CSVs
+│   ├── plots/           # Existing PNGs
+│   └── rl_models/       # Existing PPO.zip
+├── src/                 # NEW: All executable code
+│   ├── vae_lstm/        # VAE components
+│   │   ├── train.py     # Modified to use output_split_models
+│   │   ├── generate.py
+│   │   └── models.py
+│   └── rl_training/     # RL components
+│       ├── train_ppo.py
+│       └── environments.py
+└── sim2real_vae.py      # LEGACY (eventually migrate to src)
 ```
 
 ## 📚 Citation

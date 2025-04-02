@@ -88,6 +88,8 @@ robot/                   # Project root
 │   └── rl_training/     # RL components
 │       ├── train_ppo.py
 │       └── environments.py
+│       └── evaluate.py
+│       └── init.py
 ```
 
 ## 📚 Citation
